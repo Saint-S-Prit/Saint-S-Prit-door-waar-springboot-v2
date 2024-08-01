@@ -61,7 +61,7 @@ public class WorkerController {
 
 
 
-    @GetMapping(value = "/all-workers")
+    @GetMapping(value = "/admin/all-workers")
     public List<WorkerDto> findAll()
     {
         return  workerService.findAll();
