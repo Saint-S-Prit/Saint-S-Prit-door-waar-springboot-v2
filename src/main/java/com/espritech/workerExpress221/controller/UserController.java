@@ -38,7 +38,7 @@ public class UserController {
 
     @PatchMapping("/users/changePassword")
     public void changePassword(@RequestBody ChangePasswordRequest changePasswordRequest, Principal connectUser) {
-         userAppService.changePassword(changePasswordRequest, connectUser);;
+         userAppService.changePassword(changePasswordRequest, connectUser);
     }
 
     @GetMapping("/users")
