@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface UserAppRepository extends JpaRepository<UserApp, Long> {
     Optional<UserApp> findByPhoneNumber(String phoneNumber);
+    Optional<UserApp> findByPhoneNumberAndArchiveFalse(String phoneNumber);
 }

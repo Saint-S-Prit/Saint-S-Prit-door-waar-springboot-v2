@@ -46,7 +46,7 @@ public class UserAppServiceImpl implements UserAppService {
             log.error("User is not valid {}", userAppDto);
             throw new InvalidEntityException("Le user n'est pas valide",  ErrorCodes.USER_NOT_VALID, errors);
         }
-        userAppRepository.findByPhoneNumber(userAppDto.getPhoneNumber())
+        userAppRepository.findByPhoneNumberAndArchiveFalse(userAppDto.getPhoneNumber())
                 .ifPresent(existingPhoneNumber -> {
                     throw new EntityNotFoundException(
                             "Le  numero de telephone " + phoneNumber + " existe déjà",
