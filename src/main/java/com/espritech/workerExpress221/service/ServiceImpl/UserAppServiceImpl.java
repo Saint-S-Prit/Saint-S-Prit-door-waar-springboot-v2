@@ -7,6 +7,7 @@ import com.espritech.workerExpress221.config.exception.ErrorCodes;
 import com.espritech.workerExpress221.config.exception.InvalidEntityException;
 import com.espritech.workerExpress221.dto.UserAppDto;
 import com.espritech.workerExpress221.entity.UserApp;
+import com.espritech.workerExpress221.repository.ReviewAppRepository;
 import com.espritech.workerExpress221.repository.UserAppRepository;
 import com.espritech.workerExpress221.service.UserAppService;
 import com.espritech.workerExpress221.entity.Role;
@@ -30,6 +31,7 @@ public class UserAppServiceImpl implements UserAppService {
 
     PasswordEncoder passwordEncoder;
     UserAppRepository userAppRepository;
+    ReviewAppRepository reviewAppRepository;
     private final Helpers helpers;
 
     @Override
@@ -106,20 +108,22 @@ public class UserAppServiceImpl implements UserAppService {
 
     @Override
     public void deleteById(Long id) {
-        if (id == null)
-        {
-            log.error("phoneNumber is null");
+        if (id == null) {
+            log.error("ID is null");
+            throw new IllegalArgumentException("ID cannot be null");
         }
 
-        assert id != null;
-        UserApp user =  userAppRepository.findById(id).orElseThrow(
-                ()->
-                        new EntityNotFoundException(
-                                "l'user  n'existe pas .",
-                                ErrorCodes.USER_NOT_FOUND)
+        UserApp user = userAppRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(
+                        "User does not exist.",
+                        ErrorCodes.USER_NOT_FOUND)
         );
-        //user.setArchive(true); // Inverser la valeur si true
+
+        // Supprimer les enregistrements enfants
+        reviewAppRepository.deleteAllByUserApp(user);
+        log.info("Deleting user with ID: {}", id);
         userAppRepository.delete(user);
+        log.info("User with ID: {} deleted successfully", id);
     }
 
     @Override

@@ -1,9 +1,7 @@
 package com.espritech.workerExpress221.repository;
 
-import com.espritech.workerExpress221.entity.ReviewApp;
-import com.espritech.workerExpress221.entity.ReviewWorker;
-import com.espritech.workerExpress221.entity.Role;
-import com.espritech.workerExpress221.entity.Worker;
+import com.espritech.workerExpress221.entity.*;
+import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,5 +14,7 @@ public interface ReviewAppRepository extends JpaRepository<ReviewApp, Long> {
     Optional<ReviewApp> findByIdAndArchiveFalse(Long id);
 
     List<ReviewApp> findAllByIsPublishTrueAndArchiveFalse();
+
+    void deleteAllByUserApp(UserApp user);
 
 }
