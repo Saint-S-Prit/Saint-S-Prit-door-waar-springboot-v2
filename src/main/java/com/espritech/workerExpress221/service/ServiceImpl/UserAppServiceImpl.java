@@ -120,7 +120,7 @@ public class UserAppServiceImpl implements UserAppService {
                                 ErrorCodes.USER_NOT_FOUND)
         );
         //user.setArchive(true); // Inverser la valeur si true
-        userAppRepository.deleteAllById(Collections.singleton(user.getId()));
+        userAppRepository.delete(user);
     }
 
     @Override
