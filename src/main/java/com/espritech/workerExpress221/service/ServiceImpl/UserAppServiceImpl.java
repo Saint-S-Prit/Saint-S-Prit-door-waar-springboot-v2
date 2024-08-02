@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -111,7 +112,6 @@ public class UserAppServiceImpl implements UserAppService {
             log.error("phoneNumber is null");
         }
 
-        assert id != null;
         UserApp user =  userAppRepository.findById(id).orElseThrow(
                 ()->
                         new EntityNotFoundException(
@@ -119,7 +119,7 @@ public class UserAppServiceImpl implements UserAppService {
                                 ErrorCodes.USER_NOT_FOUND)
         );
         //user.setArchive(true); // Inverser la valeur si true
-        userAppRepository.deleteById(user.getId());
+        userAppRepository.deleteAllById(Collections.singleton(user.getId()));
     }
 
     @Override
@@ -136,7 +136,6 @@ public class UserAppServiceImpl implements UserAppService {
             //return null;
         }
         //var phoneNumberFormat = helpers.formatPhoneNumber(phoneNumber);
-        assert id != null;
         UserApp user =  userAppRepository.findById(id).orElseThrow(
                 ()->
                         new EntityNotFoundException(
