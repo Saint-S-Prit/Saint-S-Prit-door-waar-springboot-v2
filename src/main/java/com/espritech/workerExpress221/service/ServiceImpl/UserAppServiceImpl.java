@@ -91,6 +91,24 @@ public class UserAppServiceImpl implements UserAppService {
     }
 
     @Override
+    public void deleteByPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null)
+        {
+            log.error("phoneNumber is null");
+        }
+        var phoneNumberFormat = helpers.formatPhoneNumber(phoneNumber);
+
+        UserApp user =  userAppRepository.findByPhoneNumber(phoneNumberFormat).orElseThrow(
+                ()->
+                        new EntityNotFoundException(
+                                "User avec le numero= " + phoneNumber + " n'existe pas .",
+                                ErrorCodes.USER_NOT_FOUND)
+        );
+        user.setArchive(true); // Inverser la valeur si true
+        userAppRepository.flush();
+    }
+
+    @Override
     public List<UserAppDto> findAll() {
         return userAppRepository.findAll().stream().map(UserAppDto::fromEntity).toList();
     }
