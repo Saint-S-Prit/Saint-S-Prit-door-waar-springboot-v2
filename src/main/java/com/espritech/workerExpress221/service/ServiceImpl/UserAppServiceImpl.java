@@ -91,11 +91,6 @@ public class UserAppServiceImpl implements UserAppService {
     }
 
     @Override
-    public void deleteByPhoneNumber(String phoneNumber) {
-
-    }
-
-    @Override
     public void deleteById(Long id) {
         if (id == null)
         {
