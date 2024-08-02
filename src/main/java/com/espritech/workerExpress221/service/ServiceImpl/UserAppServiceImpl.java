@@ -92,20 +92,24 @@ public class UserAppServiceImpl implements UserAppService {
 
     @Override
     public void deleteByPhoneNumber(String phoneNumber) {
-        if (phoneNumber == null)
+
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        if (id == null)
         {
             log.error("phoneNumber is null");
         }
-        var phoneNumberFormat = helpers.formatPhoneNumber(phoneNumber);
 
-        UserApp user =  userAppRepository.findByPhoneNumber(phoneNumberFormat).orElseThrow(
+        UserApp user =  userAppRepository.findById(id).orElseThrow(
                 ()->
                         new EntityNotFoundException(
-                                "User avec le numero= " + phoneNumber + " n'existe pas .",
+                                "l'user  n'existe pas .",
                                 ErrorCodes.USER_NOT_FOUND)
         );
         //user.setArchive(true); // Inverser la valeur si true
-        userAppRepository.delete(user);
+        userAppRepository.deleteById(id);
     }
 
     @Override

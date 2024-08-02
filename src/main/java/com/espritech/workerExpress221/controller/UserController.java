@@ -51,8 +51,8 @@ public class UserController {
         userAppService.delete(id);
     }
 
-    @DeleteMapping("/users/{phoneNumber}/delete")
-    public void deleteByPhoneNumber(@PathVariable String phoneNumber) {
-        userAppService.deleteByPhoneNumber(phoneNumber);
+    @DeleteMapping("/users/{id}/delete")
+    public void deleteById(@PathVariable Long id) {
+        userAppService.deleteById(id);
     }
 }
