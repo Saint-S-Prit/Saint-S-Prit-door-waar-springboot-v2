@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -97,6 +98,24 @@ public class UserAppServiceImpl implements UserAppService {
 
     @Override
     public void delete(Long id) {
+
+        if (id == null)
+        {
+            log.error("id is null");
+            //return null;
+        }
+        //var phoneNumberFormat = helpers.formatPhoneNumber(phoneNumber);
+
+        assert id != null;
+        UserApp user =  userAppRepository.findById(id).orElseThrow(
+                ()->
+                        new EntityNotFoundException(
+                                "Ce user n'existe pas .",
+                                ErrorCodes.USER_NOT_FOUND)
+        );
+
+        user.setArchive(true); // Inverser la valeur si true
+        userAppRepository.flush();
 
     }
 
