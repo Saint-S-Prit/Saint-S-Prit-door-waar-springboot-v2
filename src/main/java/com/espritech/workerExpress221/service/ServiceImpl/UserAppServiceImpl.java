@@ -104,8 +104,8 @@ public class UserAppServiceImpl implements UserAppService {
                                 "User avec le numero= " + phoneNumber + " n'existe pas .",
                                 ErrorCodes.USER_NOT_FOUND)
         );
-        user.setArchive(true); // Inverser la valeur si true
-        userAppRepository.flush();
+        //user.setArchive(true); // Inverser la valeur si true
+        userAppRepository.delete(user);
     }
 
     @Override
