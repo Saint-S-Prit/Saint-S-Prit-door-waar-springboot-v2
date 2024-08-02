@@ -112,6 +112,7 @@ public class UserAppServiceImpl implements UserAppService {
             log.error("phoneNumber is null");
         }
 
+        assert id != null;
         UserApp user =  userAppRepository.findById(id).orElseThrow(
                 ()->
                         new EntityNotFoundException(
@@ -136,6 +137,7 @@ public class UserAppServiceImpl implements UserAppService {
             //return null;
         }
         //var phoneNumberFormat = helpers.formatPhoneNumber(phoneNumber);
+        assert id != null;
         UserApp user =  userAppRepository.findById(id).orElseThrow(
                 ()->
                         new EntityNotFoundException(
