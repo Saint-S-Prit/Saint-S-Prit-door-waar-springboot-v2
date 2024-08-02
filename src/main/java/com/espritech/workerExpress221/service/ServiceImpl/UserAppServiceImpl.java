@@ -102,6 +102,7 @@ public class UserAppServiceImpl implements UserAppService {
             log.error("phoneNumber is null");
         }
 
+        assert id != null;
         UserApp user =  userAppRepository.findById(id).orElseThrow(
                 ()->
                         new EntityNotFoundException(
@@ -109,7 +110,7 @@ public class UserAppServiceImpl implements UserAppService {
                                 ErrorCodes.USER_NOT_FOUND)
         );
         //user.setArchive(true); // Inverser la valeur si true
-        userAppRepository.deleteById(id);
+        userAppRepository.deleteById(user.getId());
     }
 
     @Override

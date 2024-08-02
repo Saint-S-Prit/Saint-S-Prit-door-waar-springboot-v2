@@ -11,7 +11,6 @@ public interface UserAppService {
     UserAppDto save(UserAppDto userAppDto);
     UserAppDto findById(Long id);
     UserAppDto findByPhoneNumber(String phoneNumber);
-    void deleteByPhoneNumber(String phoneNumber);
     void deleteById(Long id);
     List<UserAppDto> findAll();
     void delete(Long id);
