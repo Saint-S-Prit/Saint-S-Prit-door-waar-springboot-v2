@@ -1,7 +1,6 @@
 package com.espritech.workerExpress221.repository;
 
 import com.espritech.workerExpress221.entity.*;
-import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
