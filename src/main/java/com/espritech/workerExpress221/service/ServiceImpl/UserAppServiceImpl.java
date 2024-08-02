@@ -68,8 +68,22 @@ public class UserAppServiceImpl implements UserAppService {
 
     @Override
     public UserAppDto findById(Long id) {
-        return null;
+
+        if (id == null)
+        {
+            log.error("id is null");
+            return null;
+        }
+
+        UserApp user =  userAppRepository.findById(id).orElseThrow(
+                ()->
+                        new EntityNotFoundException(
+                                "User n'existe pas .",
+                                ErrorCodes.USER_NOT_FOUND)
+        );
+        return UserAppDto.fromEntity(user);
     }
+
 
     @Override
     public UserAppDto findByPhoneNumber(String phoneNumber) {
@@ -122,7 +136,6 @@ public class UserAppServiceImpl implements UserAppService {
             //return null;
         }
         //var phoneNumberFormat = helpers.formatPhoneNumber(phoneNumber);
-
         assert id != null;
         UserApp user =  userAppRepository.findById(id).orElseThrow(
                 ()->

@@ -14,7 +14,6 @@ public interface UserAppService {
     void deleteById(Long id);
     List<UserAppDto> findAll();
     void delete(Long id);
-
     void changePassword(ChangePasswordRequest changePasswordRequest, Principal connectUser);
     //UserDto findByEmail(String email);
 
