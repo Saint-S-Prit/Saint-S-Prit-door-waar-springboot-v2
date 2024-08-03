@@ -8,11 +8,14 @@ import com.espritech.workerExpress221.config.exception.InvalidEntityException;
 import com.espritech.workerExpress221.dto.UserAppDto;
 import com.espritech.workerExpress221.entity.UserApp;
 import com.espritech.workerExpress221.repository.ReviewAppRepository;
+import com.espritech.workerExpress221.repository.ReviewWorkerRepository;
 import com.espritech.workerExpress221.repository.UserAppRepository;
+import com.espritech.workerExpress221.repository.WorkerRepository;
 import com.espritech.workerExpress221.service.UserAppService;
 import com.espritech.workerExpress221.entity.Role;
 import com.espritech.workerExpress221.utils.Helpers;
 import com.espritech.workerExpress221.validator.UserAppValidator;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,6 +35,8 @@ public class UserAppServiceImpl implements UserAppService {
     PasswordEncoder passwordEncoder;
     UserAppRepository userAppRepository;
     ReviewAppRepository reviewAppRepository;
+    ReviewWorkerRepository reviewWorkerRepository;
+   WorkerRepository workerRepository;
     private final Helpers helpers;
 
     @Override
@@ -107,6 +112,7 @@ public class UserAppServiceImpl implements UserAppService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         if (id == null) {
             log.error("ID is null");
@@ -121,6 +127,11 @@ public class UserAppServiceImpl implements UserAppService {
 
         // Supprimer les enregistrements enfants
         reviewAppRepository.deleteAllByUserApp(user);
+        reviewWorkerRepository.deleteAllByClient(user);
+        if ("WORKER".equalsIgnoreCase(user.getRole().toString()))
+        {
+            workerRepository.deleteAllByPhoneNumber(user.getPhoneNumber());
+        }
         log.info("Deleting user with ID: {}", id);
         userAppRepository.delete(user);
         log.info("User with ID: {} deleted successfully", id);

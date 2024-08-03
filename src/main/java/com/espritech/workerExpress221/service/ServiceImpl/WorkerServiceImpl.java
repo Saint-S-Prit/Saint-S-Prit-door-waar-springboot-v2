@@ -13,6 +13,7 @@ import com.espritech.workerExpress221.service.ConfigureAppService;
 import com.espritech.workerExpress221.service.WorkerService;
 import com.espritech.workerExpress221.utils.Helpers;
 import com.espritech.workerExpress221.validator.WorkerValidator;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -430,5 +431,26 @@ public class WorkerServiceImpl implements WorkerService {
         configureAppService.put("recommend");
         workerRepository.flush();
 
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllByPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null)
+        {
+            log.error("phoneNumber is null");
+        }
+
+        var phoneNumber1 = helpers.formatPhoneNumber(phoneNumber);
+
+
+        Worker worker =  workerRepository.findByPhoneNumber(phoneNumber1).orElseThrow(
+                ()->
+                        new EntityNotFoundException(
+                                "Worker avec l'ID = " + phoneNumber1 + " n'existe pas .",
+                                ErrorCodes.WORKER_NOT_FOUND)
+        );
+
+        workerRepository.deleteAllByPhoneNumber(worker.getPhoneNumber());
     }
 }

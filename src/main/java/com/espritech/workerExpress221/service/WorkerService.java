@@ -26,6 +26,7 @@ public interface WorkerService {
     String isRecommendWorker(String phoneNumber);
     String isAvailable(String phoneNumber);
     void delete(String phoneNumber);
+    void deleteAllByPhoneNumber(String phoneNumber);
     List<WorkerDto> findAllByArchiveFalseAndIsWorkerTrue();
     List<WorkerDto> findAllByArchiveFalseAndIsWorkerFalse();
 }

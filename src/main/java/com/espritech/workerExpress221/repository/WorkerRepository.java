@@ -29,9 +29,9 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
 
     //Optional<Worker> findByCinAndArchiveFalse(String cin);
     List<Worker> findAllByRecommendTrueAndIsWorkerTrue();
+    void deleteAllByPhoneNumber(String phoneNumber);
 
     Optional<Worker> findByPhoneNumberAndArchiveFalse(String phoneNumber1);
-
 
     @Query("SELECT w FROM Worker w WHERE " +
             "(:fullName IS NULL OR :fullName = '' OR w.fullName LIKE %:fullName%) " +
@@ -39,4 +39,6 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
     Page<Worker> findAllByFullNameAndIsWorkerTrueWithPaginator(
             @Param("fullName") String fullName,
             Pageable pageable);
+
+    Optional<Worker> findByPhoneNumber(String phoneNumber1);
 }

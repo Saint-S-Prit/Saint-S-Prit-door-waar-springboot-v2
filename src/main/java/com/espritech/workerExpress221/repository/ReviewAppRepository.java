@@ -1,6 +1,7 @@
 package com.espritech.workerExpress221.repository;
 
 import com.espritech.workerExpress221.entity.*;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public interface ReviewAppRepository extends JpaRepository<ReviewApp, Long> {
 
     List<ReviewApp> findAllByIsPublishTrueAndArchiveFalse();
 
+    @Transactional
     void deleteAllByUserApp(UserApp user);
 
 }

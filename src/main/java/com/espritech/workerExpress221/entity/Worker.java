@@ -76,7 +76,8 @@ public class Worker extends AbstractEntity {
 
     private Boolean isWorker =  true;
 
-    @OneToMany(mappedBy = "worker")
+   // @OneToMany(mappedBy = "worker")
+    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CallHistory> callHistories;
 
 }

@@ -1,7 +1,9 @@
 package com.espritech.workerExpress221.repository;
 
 import com.espritech.workerExpress221.entity.ReviewWorker;
+import com.espritech.workerExpress221.entity.UserApp;
 import com.espritech.workerExpress221.entity.Worker;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,4 +13,8 @@ public interface ReviewWorkerRepository extends JpaRepository<ReviewWorker, Long
     List<ReviewWorker> findByWorker(Worker worker);
 
     Optional<ReviewWorker> findByIdAndArchiveFalse(Long id);
+
+
+    @Transactional
+    void deleteAllByClient(UserApp user);
 }
